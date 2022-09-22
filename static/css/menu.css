@@ -1,0 +1,89 @@
+.container {
+  /* Center the form on the page */
+  margin: 0 auto;
+  width: 500px;
+  /* Form outline */
+  padding: 1em;
+  border: 1px solid #ccc;
+  border-radius: 1em;
+ }
+
+.logo {
+  font: 1em sans-serif;
+  font-size: xx-large;
+
+  text-align: center;
+
+ }
+
+.menu {
+  /* Center the form on the page */
+  margin: 0 auto;
+  width: 400px;
+  /* Form outline */
+  padding: 1em;
+  /* border: 1px solid #ccc;
+  border-radius: 1em; */
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 400;
+
+  text-align: center;
+  text-decoration: none;
+}
+
+li {
+  margin: 0 auto;
+  width: 200px;
+
+  display: block;
+
+  padding: 1em;
+  border: 1px solid #ccc;
+}
+
+li:first-child {
+  margin: 0 auto;
+  width: 200px;
+
+  display: block;
+
+  padding: 1em;
+  border: 1px solid #ccc;
+  border-top-left-radius: 1em;
+  border-top-right-radius: 1em;
+}
+
+li:last-child {
+  margin: 0 auto;
+  width: 200px;
+
+  display: block;
+
+  padding: 1em;
+  border: 1px solid #ccc;
+  border-bottom-left-radius: 1em;
+  border-bottom-right-radius: 1em;
+}
+
+a {
+  font: 1em sans-serif;
+  font-size: large;
+
+  color: black;
+  text-decoration: none;
+}
+
+label[for="info"] {
+  font: 1em sans-serif;
+
+  margin: 0 auto;
+  /* Uniform size & alignment */
+  display: inline-block;
+  width: 500px;
+  text-align: center;
+}

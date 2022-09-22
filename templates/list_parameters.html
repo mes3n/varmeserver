@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/menu.css') }}">
+<html>
+  <body>
+    <header>
+      <div class="container">
+        <h1 class="logo">Parameters</h1>
+        <strong>
+          <ul class="menu">
+            {% for parameter in parameters %}
+            <li><a href="{{ url_for('edit_parameter', idx=parameter['idx']) }}">{{ parameter['name'] }}</a></li>
+            {% endfor %}       
+          </ul>
+        </strong>
+      </div>
+    </header>
+  </body>
+</html>

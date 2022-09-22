@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/form.css') }}">
+<html>
+  <body>
+    <div class="container">
+      <h1 class="logo">Edit parameter</h1>
+      <form action="/set_parameter" method="post">
+        <ul>
+          <li>
+            <label for="name">name:</label>
+            <input type="text" id="name" name="parameter_name" value="{{ parameter['name'] }}" />
+          </li>
+          <li>
+            <label for="idx">idx:</label>
+            <input type="text" id="idx" name="parameter_idx" maxlength="4" value="{{ parameter['idx'] }}" />
+          </li>
+          <li>
+            <label for="info">value when electrical prices are... </label>
+          </li>
+          <li>
+            <label for="low">low:</label>
+            <input type="number" id="low" name="parameter_low" min="-1000" max="1000" value="{{ parameter['vals']['low'] }}" />
+      
+            <label for="mid">mid:</label>
+            <input type="number" id="mid" name="parameter_mid" min="-1000" max="1000" value="{{ parameter['vals']['mid'] }}" />
+      
+            <label for="high">high:</label>
+            <input type="number" id="high" name="parameter_high" min="-1000" max="1000" value="{{ parameter['vals']['high'] }}" />
+          </li>
+      
+          <li class="button">
+            <button type="submit" name="action" value="set" >Set</button>
+            <button type="submit" name="action" value="delete" >Delete</button>
+            <button type="submit" name="action" value="cancel" >Cancel</button>
+          </li>
+        </ul>
+      </form>
+    </div>
+  </body>
+</html>

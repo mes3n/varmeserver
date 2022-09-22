@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/menu.css') }}">
+<html>
+  <body>
+    <header>
+      <div class="container">
+        <h1 class="logo">Navigation</h1>
+        <strong>
+          <ul class="menu">
+            <li><a href="{{ url_for('add_parameter') }}">Add parameter</a></li>
+            <li><a href="{{ url_for('list_parameters') }}">List parameters</a></li>
+          </ul>
+        </strong>
+        <label for="info" >{{ status }}</label>
+      </div>
+    </header>
+  </body>
+</html>
