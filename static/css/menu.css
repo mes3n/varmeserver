@@ -71,6 +71,9 @@ li:last-child {
 }
 
 a {
+  margin: 0 auto;
+  width: 200px;
+  
   font: 1em sans-serif;
   font-size: large;
 
@@ -86,4 +89,9 @@ label[for="info"] {
   display: inline-block;
   width: 500px;
   text-align: center;
+}
+
+button {
+  margin: 0 auto;
+  font: 1em sans-serif;
 }
