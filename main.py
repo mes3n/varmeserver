@@ -70,7 +70,7 @@ def set_parameter():
             if parameter['idx'] == new_parameter['idx']:  # parameter was found, changing old one
                 global_parameters[i] = new_parameter
 
-                if global_parameters and parameters_path.is_file():
+                if global_parameters:
                     with open(parameters_path, 'w') as file:
                         file.write(json.dumps(global_parameters, indent=4))
 
@@ -79,7 +79,7 @@ def set_parameter():
         else:  # parameter was not found, adding new
             global_parameters.append(new_parameter)
 
-            if global_parameters and parameters_path.is_file():
+            if global_parameters:
                 with open(parameters_path, 'w') as file:
                     file.write(json.dumps(global_parameters, indent=4))
 
@@ -106,7 +106,7 @@ def set_settings ():
         global_config['low_mid'] = request.form.get('low_mid_price', type=float)
         global_config['mid_high'] = request.form.get('mid_high_price', type=float)
 
-        if global_config and parameters_path.is_file():
+        if global_config:
             with open(varmescript_config, 'w') as file:
                 file.write(json.dumps(global_config, indent=4))
 
