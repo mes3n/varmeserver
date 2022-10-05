@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/form.css') }}">
+<html>
+  <body>
+    <div class="container">
+      <h1 class="logo">Settings</h1>
+      <form action="/set_settings" method="post">
+        <ul>          
+            <li>
+              <label for="token">Token:</label>
+              <input type="text" id="token" name="tibber_token" value="{{ config['TOKEN'] }}"/>
+            </li>
+            <!-- <li>
+            <label for="low_mid">low_mid:</label>
+              <input type="number" step="0.01" min="0" id="low_mid" name="low_mid_price" />
+            </li>
+            <li>
+              <label for="mid_high">mid_high:</label>
+              <input type="number" step="0.01" min="0" id="mid_high" name="mid_high_price" />
+            </li> -->
+            <li>
+              <label for="info">Set price range limits  </label>
+            </li>
+            <li>
+              <label for="low">low :</label>
+              <input type="number" step="0.01" min="0" id="low_mid" name="low_mid_price" value="{{ config['low_mid'] }}"/>
+        
+              <label for="mid">: mid :</label>
+              <input type="number" step="0.01" min="0" id="mid_high" name="mid_high_price" value="{{ config['mid_high'] }}"/>
+        
+              <label for="high">: high</label>
+            </li>
+            <li class="button">
+              <button type="submit" name="action" value="save">Save</button>
+              <button type="submit" name="action" value="cancel">Cancel</button>
+            </li>
+        </ul>
+      </form>
+    </div>
+  </body>
+</html>
