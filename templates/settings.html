@@ -3,32 +3,39 @@
 <html>
   <body>
     <div class="container">
-      <h1 class="logo">Settings</h1>
+      <h1 class="logo">Script Settings</h1>
       <form action="/set_settings" method="post">
         <ul>          
             <li>
               <label for="token">Token:</label>
-              <input type="text" id="token" name="tibber_token" value="{{ config['TOKEN'] }}"/>
-            </li>
-            <!-- <li>
-            <label for="low_mid">low_mid:</label>
-              <input type="number" step="0.01" min="0" id="low_mid" name="low_mid_price" />
+              <input type="text" name="tibber_token" value="{{ config['TOKEN'] }}"/>
             </li>
             <li>
-              <label for="mid_high">mid_high:</label>
-              <input type="number" step="0.01" min="0" id="mid_high" name="mid_high_price" />
-            </li> -->
+              <label for="ip">Husdata IP:</label>
+              <input type="text" name="husdata_ip" value="{{ config['husdata_ip'] }}"/>
+            </li>
             <li>
               <label for="info">Set price range limits  </label>
             </li>
             <li>
               <label for="low">low :</label>
-              <input type="number" step="0.01" min="0" id="low_mid" name="low_mid_price" value="{{ config['low_mid'] }}"/>
+              <input type="number" step="0.01" min="0" name="low_mid_price" value="{{ config['low_mid'] }}"/>
         
               <label for="mid">: mid :</label>
-              <input type="number" step="0.01" min="0" id="mid_high" name="mid_high_price" value="{{ config['mid_high'] }}"/>
+              <input type="number" step="0.01" min="0" name="mid_high_price" value="{{ config['mid_high'] }}"/>
         
               <label for="high">: high</label>
+            </li>
+            <li>
+              <label for="toggle">on/off: </label>
+              <label class="switch">
+                {% if script_should_run == True %}
+                  <input type="checkbox" name="script_toggle_on" checked>
+                {% else %}
+                  <input type="checkbox" name="script_toggle_on">
+                {% endif %}
+                <span class="slider round"></span>
+              </label>
             </li>
             <li class="button">
               <button type="submit" name="action" value="save">Save</button>
