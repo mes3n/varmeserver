@@ -3,10 +3,10 @@ from flask import Flask, request, render_template, redirect, url_for, send_file
 from pathlib import Path
 import json
 
-import threading
-import asyncio
+from datetime import datetime
 
 import subprocess
+import sys
 
 
 app = Flask(__name__)
@@ -20,16 +20,21 @@ class ScriptThread():
 
         self.running = False
 
-    def start(self):
+    def start(self):  # add check to see if funtion comleted sucessfully
         commands = f'cd {self.script_dir}; python main.py'
-        self.process = subprocess.Popen(commands, stdout=subprocess.PIPE, shell=True)
+        self.process = subprocess.Popen(commands, shell=True)
         self.pid = self.process.pid
 
         self.running = True
 
-    def stop(self):
-        commands = f'kill {self.pid}'
-        self.process = subprocess.Popen(commands, stdout=subprocess.PIPE, shell=True)
+    def stop(self):  # - || -
+
+        if sys.platform.startswith('linux'):
+            commands = f'kill {self.pid}'
+        elif sys.platform.startswith('win32'):
+            commands = f'taskkill /PID {self.pid} /F'  # gotta love windows
+
+        self.process = subprocess.Popen(commands, shell=True)
         
         self.running = False
 
@@ -154,12 +159,10 @@ def set_settings ():
 
 @app.route('/database')
 def database():
-    return send_file(script_database)
 
+    return send_file(script_database, download_name=f'\
+        {script_database.stem}{datetime.now().date()}{script_database.suffix}')
 
-def start_script():
-    subprocess.run([f'cd {script_dir};', 'python main.py &'], shell=True)
-    pid = int(subprocess.run(['echo $!'], capture_output=True, shell=True))
 
 if __name__ == '__main__':
 
