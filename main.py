@@ -5,40 +5,60 @@ import json
 
 from datetime import datetime
 
-import subprocess
-import sys
+import threading
+import asyncio
+
+from varmescript import main as varmescript
 
 
 app = Flask(__name__)
 
+# class ScriptThread():
+#     def __init__(self, script_directory):
+#         self.process: subprocess.Popen = None
+#         self.script_dir: str = script_directory
+#         self.pid = '0'
 
-class ScriptThread():
-    def __init__(self, script_directory):
-        self.process: subprocess.Popen = None
-        self.script_dir: str = script_directory
-        self.pid = '0'
+#         self.running = False
 
-        self.running = False
+#     def start(self):  # add check to see if funtion comleted sucessfully
+#         commands = f'cd {self.script_dir}; python main.py'
+#         self.process = subprocess.Popen(commands, shell=True)
+#         self.pid = self.process.pid
 
-    def start(self):  # add check to see if funtion comleted sucessfully
-        commands = f'cd {self.script_dir}; python main.py'
-        self.process = subprocess.Popen(commands, shell=True)
-        self.pid = self.process.pid
+#         self.running = True
 
-        self.running = True
+#     def stop(self):  # - || -
 
-    def stop(self):  # - || -
+#         if sys.platform.startswith('linux'):
+#             commands = f'kill {self.pid}'
+#         elif sys.platform.startswith('win32'):
+#             commands = f'taskkill /PID {self.pid} /F'  # gotta love windows
 
-        if sys.platform.startswith('linux'):
-            commands = f'kill {self.pid}'
-        elif sys.platform.startswith('win32'):
-            commands = f'taskkill /PID {self.pid} /F'  # gotta love windows
-
-        self.process = subprocess.Popen(commands, shell=True)
+#         self.process = subprocess.Popen(commands, shell=True)
         
-        self.running = False
+#         self.running = False
 
+class ScriptThread(threading.Thread):
+    def __init__(self, script_dir: Path):
 
+        self.varmescript = varmescript.VarmeScript(script_dir)
+        super().__init__(target=self.varmescript.loop.run_until_complete, args=(self.varmescript.main(),))
+
+        self.varmescript.working = False
+
+        self.start()
+
+    def toggle_pause(self) -> bool:
+        self.varmescript.working = not self.varmescript.working
+        return self.varmescript.working
+
+    async def stop(self):
+        await self.varmescript.close()
+
+    def __del__(self):
+        asyncio.create_task(self.stop())
+        self.join()
 
 @app.route('/')
 def home():
@@ -146,10 +166,8 @@ def set_settings ():
             with open(script_config, 'w') as file:
                 file.write(json.dumps(global_config, indent=4))
 
-        if script_should_run and not script_thread.running:
-            script_thread.start()
-        elif not script_should_run and script_thread.running:
-            script_thread.stop()
+        if script_should_run != script_thread.varmescript.working:
+            script_should_run = script_thread.toggle_pause()
 
         return redirect(url_for('home', status=f"Saved settings."))
 
@@ -175,10 +193,7 @@ if __name__ == '__main__':
             script_database = Path(paths_dict['script_database'])
             script_parameters = Path(paths_dict['script_parameters'])    
     else:
-        script_dir = Path('')    
-        script_config = Path('')
-        script_database = Path('')
-        script_parameters = Path('')
+        print("Missing paths file at paths.json")
 
     if script_parameters.is_file():
         with open(script_parameters, 'r') as file:
