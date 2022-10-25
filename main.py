@@ -210,6 +210,6 @@ if __name__ == '__main__':
     script_should_run: bool = False
     script_thread: ScriptThread = ScriptThread(script_dir)
 
-    app.run(host="0.0.0.0", port=5000, debug=True)
-    # from waitress import serve
-    # serve(app, host="0.0.0.0", port=5000)
+    # app.run(host="0.0.0.0", port=5000, debug=True)
+    from waitress import serve
+    serve(app, host="0.0.0.0", port=5000)
